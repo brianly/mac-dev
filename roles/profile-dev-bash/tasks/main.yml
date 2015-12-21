@@ -1,0 +1,7 @@
+---
+
+- name: install bash dev brew applications
+  homebrew: name={{ item }} state=latest
+  with_items:
+    - bash
+    - bash-completion

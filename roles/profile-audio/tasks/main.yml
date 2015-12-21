@@ -1,0 +1,12 @@
+---
+
+- name: install audio brew applications
+  homebrew: name={{ item }} state=latest
+  with_items:
+    - lame
+
+- name: install audio cask applications
+  homebrew_cask: name={{ item }} state=present
+  with_items:
+    - xact
+    - xld

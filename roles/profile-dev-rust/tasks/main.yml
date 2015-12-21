@@ -1,0 +1,10 @@
+---
+
+- name: download rustup
+  get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/rustup.sh
+    mode: 0700
+
+- name: install rustup
+  shell: /tmp/rustup.sh -y

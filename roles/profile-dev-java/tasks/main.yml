@@ -1,0 +1,14 @@
+---
+
+- name: install java dev cask applications
+  homebrew_cask: name={{ item }} state=present
+  with_items:
+    - adoptopenjdk8
+    - adoptopenjdk
+
+- name: install java dev brew applications
+  homebrew: name={{ item }} state=latest
+  with_items:
+    - ant
+    - gradle
+    - maven

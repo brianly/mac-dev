@@ -1,0 +1,16 @@
+---
+
+galaxy_info:
+  author: Daniel Perez Alvarez
+  description: Ansible profile role for Java developers
+  license: MIT
+  min_ansible_version: 1.2
+  platforms:
+    - name: Darwin
+      versions:
+        - all
+  categories:
+    - system
+
+dependencies:
+  - profile-dev

@@ -1,0 +1,60 @@
+---
+
+- hosts: 127.0.0.1
+  connection: local
+
+  pre_tasks:
+    - name: clone dotfiles
+      git: repo=https://github.com/unindented/dotfiles.git dest=~/.dotfiles
+           recursive=yes accept_hostkey=yes
+
+    - name: install dotfiles
+      shell: ./install.sh
+      args:
+        chdir: ~/.dotfiles
+
+  post_tasks:
+    - name: hide dock without delay
+      shell: defaults write com.apple.Dock autohide-delay -float 0
+    - name: hide dock faster
+      shell: defaults write com.apple.dock autohide-time-modifier -float 0.15
+    - name: disable swipe gestures for chrome
+      shell: killall Dock
+    - name: restart dock
+      shell: defaults write com.google.Chrome.plist AppleEnableSwipeNavigateWithScrolls -bool FALSE
+    - name: set host name
+      become: yes
+      shell: scutil --set HostName {{ computername }}
+    - name: set local host name
+      become: yes
+      shell: scutil --set LocalHostName {{ computername }}
+    - name: set computer name
+      become: yes
+      shell: scutil --set ComputerName {{ computername }}
+    - name: add to sudoers without password
+      become: yes
+      lineinfile: >
+        dest=/etc/sudoers
+        regexp='{{ item.regexp }}'
+        line='{{ item.line }}'
+        state=present
+        create=true
+      with_items:
+        - { regexp: '^daniel', line: 'daniel ALL=(ALL) NOPASSWD: ALL' }
+
+  roles:
+    - profile-audio
+    - profile-video
+    - profile-gaming
+    - profile-dev-bash
+    - profile-dev-browser
+    - profile-dev-node
+    - profile-dev-python
+    - profile-dev-ruby
+    - profile-dev-rust
+    - profile-dev-java
+    - profile-dev-misc
+
+  vars_prompt:
+  - name: computername
+    prompt: Computer name

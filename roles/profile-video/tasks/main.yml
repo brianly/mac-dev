@@ -1,0 +1,12 @@
+---
+
+- name: install video brew applications
+  homebrew: name={{ item }} state=latest
+  with_items:
+    - ffmpeg
+
+- name: install video cask applications
+  homebrew_cask: name={{ item }} state=present
+  with_items:
+    - handbrake
+    - vlc
