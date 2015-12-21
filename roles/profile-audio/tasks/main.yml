@@ -1,0 +1,6 @@
+---
+
+- name: install audio brew applications
+  homebrew: name={{ item }} state=latest
+  with_items:
+    - lame

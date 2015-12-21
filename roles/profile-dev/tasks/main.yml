@@ -1,0 +1,58 @@
+---
+- name: install developer brew applications
+  homebrew: name={{ item }} state=latest
+  with_items:
+    - autoconf
+    - automake
+    - bat
+    - brotli
+    - cmake
+    - coreutils
+    - cowsay
+    - ctags
+    - curl
+    - dos2unix
+    - dust
+    - exa
+    - fd
+    - figlet
+    - fzf
+    - gh
+    - gifsicle
+    - git
+    - graphviz
+    - hugo
+    - hyperfine
+    - imagemagick
+    - jq
+    - macvim
+    - netcat
+    - nmap
+    - openssl
+    - pandoc
+    - parallel
+    - pkg-config
+    - procs
+    - readline
+    - ripgrep
+    - sk
+    - sqlite
+    - starship
+    - tmux
+    - tokei
+    - tree
+    - wget
+    - zlib
+
+- name: install developer cask applications
+  homebrew_cask: name={{ item }} state=present
+  with_items:
+    - discord
+    - figma
+    - iterm2
+    - kap
+    - slack
+    - vagrant
+    - virtualbox
+    - visual-studio-code
+    - xquartz

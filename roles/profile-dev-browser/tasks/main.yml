@@ -1,0 +1,17 @@
+---
+
+- name: install browser brew applications
+  homebrew: name={{ item }} state=latest
+  with_items:
+    - mozjpeg
+    - webp
+
+- name: install browser dev cask applications
+  homebrew_cask: name={{ item }} state=present
+  with_items:
+    - charles
+    - imagealpha
+    - imageoptim
+    - firefox-developer-edition
+    - google-chrome-canary
+    - microsoft-edge-dev

@@ -1,0 +1,19 @@
+---
+
+- name: install pyenv
+  git: repo=https://github.com/pyenv/pyenv.git dest=~/.pyenv
+
+- name: install {{ pyenv.python_version }}
+  shell: ~/.pyenv/bin/pyenv install --skip-existing {{ pyenv.python_version }}
+  register: pyenv_install_result
+  changed_when: "'' == pyenv_install_result.stdout"
+
+- name: check if {{ pyenv.python_version }} is the default python version
+  shell: ~/.pyenv/bin/pyenv global | grep -e '{{ pyenv.python_version }}'
+  register: pyenv_check_default
+  changed_when: False
+  ignore_errors: True
+
+- name: set default python version to {{ pyenv.python_version }}
+  shell: ~/.pyenv/bin/pyenv global {{ pyenv.python_version }}
+  when: pyenv_check_default is failed

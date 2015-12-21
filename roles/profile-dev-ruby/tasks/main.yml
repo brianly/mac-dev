@@ -1,0 +1,22 @@
+---
+
+- name: install rbenv
+  git: repo=https://github.com/rbenv/rbenv.git dest=~/.rbenv
+
+- name: install ruby-build as an rbenv plugin
+  git: repo=https://github.com/rbenv/ruby-build.git dest=~/.rbenv/plugins/ruby-build
+
+- name: install {{ rbenv.ruby_version }}
+  shell: ~/.rbenv/bin/rbenv install --skip-existing {{ rbenv.ruby_version }}
+  register: rbenv_install_result
+  changed_when: "'' == rbenv_install_result.stdout"
+
+- name: check if {{ rbenv.ruby_version }} is the default ruby version
+  shell: ~/.rbenv/bin/rbenv global | grep -e '{{ rbenv.ruby_version }}'
+  register: rbenv_check_default
+  changed_when: False
+  ignore_errors: True
+
+- name: set default ruby version to {{ rbenv.ruby_version }}
+  shell: ~/.rbenv/bin/rbenv global {{ rbenv.ruby_version }}
+  when: rbenv_check_default is failed

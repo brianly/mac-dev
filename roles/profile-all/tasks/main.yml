@@ -1,0 +1,50 @@
+---
+- name: install homebrew via the curl oneliner
+  shell: 'ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
+  args:
+    creates: /usr/local/bin/brew
+
+- name: update and upgrade homebrew
+  homebrew: update_homebrew=yes upgrade_all=yes
+
+- name: tap brew and cask taps for all users
+  homebrew_tap: tap={{ item }} state=present
+  with_items:
+    - homebrew/services
+    - homebrew/cask-fonts
+    - homebrew/cask-versions
+
+- name: install brew applications for all users
+  homebrew: name={{ item }} state=present
+  with_items:
+    - git
+    - svn
+
+- name: install cask applications for all users
+  homebrew_cask: name={{ item }} state=present
+  with_items:
+    - appcleaner
+    - authy
+    - bitwarden
+    - disk-inventory-x
+    - dropbox
+    - firefox
+    - font-caskaydia-cove-nerd-font
+    - font-roboto
+    - font-roboto-mono
+    - font-roboto-slab
+    - font-source-sans-pro
+    - font-source-serif-pro
+    - google-chrome
+    - gpg-suite
+    - istat-menus
+    - microsoft-edge
+    - obsidian
+    # - onyx
+    - skype
+    - spectacle
+    - spotify
+    - the-unarchiver
+    - tomighty
+    - transmission
+    - tunnelblick

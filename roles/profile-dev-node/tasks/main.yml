@@ -1,0 +1,24 @@
+---
+
+- name: install nvm
+  git: repo=https://github.com/creationix/nvm.git dest=~/.nvm
+
+- name: install {{ nvm.node_version }}
+  shell: . ~/.nvm/nvm.sh && nvm install {{ nvm.node_version }}
+  register: nvm_install_result
+  changed_when: "'is already installed' not in nvm_install_result.stdout"
+
+- name: check if {{ nvm.node_version }} is the default node version
+  shell: . ~/.nvm/nvm.sh && nvm ls | grep -e 'default.*{{ nvm.node_version }}'
+  register: nvm_check_default
+  changed_when: False
+  ignore_errors: True
+
+- name: set default node version to {{ nvm.node_version }}
+  shell: . ~/.nvm/nvm.sh && nvm alias default {{ nvm.node_version }}
+  when: nvm_check_default is failed
+
+- name: install node applications
+  homebrew: name={{ item }} state=present
+  with_items:
+    - watchman
