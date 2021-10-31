@@ -25,7 +25,7 @@
     - hyperfine
     - imagemagick
     - jq
-    - macvim
+    # - macvim
     - netcat
     - nmap
     - openssl
@@ -43,6 +43,7 @@
     - tree
     - wget
     - zlib
+    - gron # Make JSON greppable https://github.com/tomnomnom/gron
 
 - name: install developer cask applications
   homebrew_cask: name={{ item }} state=present
@@ -52,7 +53,8 @@
     - iterm2
     - kap
     - slack
-    - vagrant
-    - virtualbox
+    # - vagrant
+    # - virtualbox
     - visual-studio-code
     - xquartz
+    - sizeup

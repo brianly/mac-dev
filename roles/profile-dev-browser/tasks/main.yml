@@ -13,5 +13,7 @@
     - imagealpha
     - imageoptim
     - firefox-developer-edition
-    - google-chrome-canary
-    - microsoft-edge-dev
+    - google-chrome-beta
+    - microsoft-edge
+    - microsoft-edge-beta
+    - opera
