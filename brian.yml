@@ -1,0 +1,48 @@
+---
+
+- hosts: 127.0.0.1
+  connection: local
+
+  pre_tasks:
+    - name: clone dotfiles
+      git: repo=https://github.com/unindented/dotfiles.git dest=~/.dotfiles
+           recursive=yes accept_hostkey=yes
+
+    - name: install dotfiles
+      shell: ./install.sh
+      args:
+        chdir: ~/.dotfiles
+
+  post_tasks:
+    - name: hide dock without delay
+      shell: defaults write com.apple.Dock autohide-delay -float 0
+    - name: hide dock faster
+      shell: defaults write com.apple.dock autohide-time-modifier -float 0.15
+    - name: restart dock
+      shell: killall Dock
+    - name: set host name
+      become: yes
+      shell: scutil --set HostName {{ computername }}
+    - name: set local host name
+      become: yes
+      shell: scutil --set LocalHostName {{ computername }}
+    - name: set computer name
+      become: yes
+      shell: scutil --set ComputerName {{ computername }}
+
+  roles:
+    # - profile-audio
+    - profile-video # done
+    - profile-gaming # done
+    - profile-dev-bash # TODO: replace with fish
+    - profile-dev-browser # done
+    - profile-dev-node # updated to node 16
+    - profile-dev-python # updated to 3.10.0
+    # - profile-dev-ruby
+    - profile-dev-rust
+    # - profile-dev-java
+    # - profile-dev-misc
+
+  vars_prompt:
+  - name: computername
+    prompt: Computer host name
