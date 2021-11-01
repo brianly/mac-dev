@@ -1,8 +1,8 @@
 ---
-- name: install homebrew via the curl oneliner
-  shell: 'ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
-  args:
-    creates: /usr/local/bin/brew
+# - name: install homebrew via the curl oneliner
+#   shell: '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+#   # args:
+#   #   creates: /usr/local/bin/brew
 
 - name: update and upgrade homebrew
   homebrew: update_homebrew=yes upgrade_all=yes
@@ -19,32 +19,42 @@
   with_items:
     - git
     - svn
+    - hg
+    - pulumi
+    - borgbackup
+    - pywhat
+    - elasticsearch
+    - exercism
+    - exiftool
+    - fish
+    - stow
+    - tree
+    - git
+    - watch
+    - lynx
+    - htop
+    - mitmproxy
+    - httpie
+    - hugo
+    - nmap
+    - imagemagick
+    - youtube-dl
+    - zola
 
 - name: install cask applications for all users
   homebrew_cask: name={{ item }} state=present
   with_items:
-    - appcleaner
     - authy
-    - bitwarden
     - disk-inventory-x
-    - dropbox
-    - firefox
-    - font-caskaydia-cove-nerd-font
-    - font-roboto
-    - font-roboto-mono
-    - font-roboto-slab
-    - font-source-sans-pro
-    - font-source-serif-pro
-    - google-chrome
-    - gpg-suite
-    - istat-menus
-    - microsoft-edge
     - obsidian
-    # - onyx
+    - onyx
     - skype
-    - spectacle
-    - spotify
-    - the-unarchiver
-    - tomighty
-    - transmission
     - tunnelblick
+    - mpv
+    - visual-studio-code
+    - coconutbattery
+    - whatsapp
+    - spotify
+    - xnviewmp
+    - geekbench
+    - sublime-text
